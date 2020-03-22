@@ -111,8 +111,8 @@ elif use_phase:
     savefile_prefix = os.path.join(model_path,'temp_phase')    # for saving models as you run
     reload_prefix = os.path.join(model_path,'temp_phase') # prefix for reloading models/weights, e.g. "temp" for "temp_model.json"
 else:
-    savefile_prefix = os.path.join(model_path,'field2')    # for saving models as you run
-    reload_prefix = os.path.join(model_path,'field2') # prefix for reloading models/weights, e.g. "temp" for "temp_model.json"
+    savefile_prefix = os.path.join(model_path,'field3')    # for saving models as you run
+    reload_prefix = os.path.join(model_path,'field3') # prefix for reloading models/weights, e.g. "temp" for "temp_model.json"
     #savefile_prefix = os.path.join(model_path,'field1')    # for saving models as you run
     #reload_prefix = os.path.join(model_path,'field1') # prefix for reloading models/weights, e.g. "temp" for "temp_model.json"
 
@@ -125,8 +125,8 @@ lr=3e-4
 dropout=.025
 
 reload_model = False
-reload_weights = True#False#True
-retrain = False#True#False
+reload_weights = False#True
+retrain = True#False
 ntrain=-1       # reduce number of training examples
 
 
@@ -137,13 +137,6 @@ ntrain=-1       # reduce number of training examples
 #phase_GT_test=np.zeros(phase_GT_test.shape)
 
 # Load and split data
-plt.figure()
-plt.plot(power_feats_train[0])
-plt.plot(power_GT_train[0])
-
-plt.figure()
-plt.plot(pspec_feats_train[0])
-
 print('Loading data...')
 x_train, y_train = rcu.prep_data(power_feats_train,pspec_feats_train,
                         power_GT_train,phase_GT_train,use_phase=use_phase,ntrain=ntrain)
@@ -246,11 +239,11 @@ print('Old Prediction errors (mean/median): power: %0.3f, %0.3f phase: %0.3f, %0
             (XZmeanerr_power,XZmedianerr_power,XZmeanerr_phase,XZmedianerr_phase))
 
 
-for j in np.arange(20,30):
+for j in np.arange(10):
     predj=pred_plot[j,:];
     #predj=XZpred_test[j,:];
     yj=y_plot[j,:]
-    rcu.plot_pred(predj,yj)
+    rcu.plot_pred(predj,yj,os.path.join(save_path,str(j)))
     plt.pause(0.5)
 
 

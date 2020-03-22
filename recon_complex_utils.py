@@ -106,8 +106,8 @@ def calc_err(A,B):
 
     npts = np.int(A.shape[1]/2)
     err_power = np.sum((A[:,:npts]-B[:,:npts])**2,axis=1)
-    #err_phase = calc_phase_err(A[:,npts:],B[:,npts:],power=A[:,:npts])
-    err_phase = calc_sine_err(A,B)
+    err_phase = calc_phase_err(A[:,npts:],B[:,npts:],power=A[:,:npts])
+    #err_phase = calc_sine_err(A,B)
         
     return np.mean(err_power),np.mean(err_phase), np.median(err_power), np.median(err_phase)
 
@@ -134,7 +134,7 @@ def calc_sine_err(A,B):
     npts = np.int(A.shape[1]/2)
     power=A[:,:npts];
     Aphase=A[:,npts:]; Bphase=B[:,npts:]
-    sine_err = np.sum(np.sin(Aphase-Bphase)**2*power) #use this one for consistency
+    sine_err = np.sum(np.sin(Aphase-Bphase)**2*power)
     return sine_err
 
 
